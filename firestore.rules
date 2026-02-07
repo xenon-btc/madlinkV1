@@ -1,0 +1,175 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Function to check if user is the owner
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Function to check if user is admin
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.email == 'contact@madlink.fr'
+      );
+    }
+
+    // Rules for users collection
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+      // Allow admins to read all user documents
+      allow read: if isAdmin();
+      // Allow updating hasUsedTrial field when user subscribes
+      allow update: if isOwner(userId) && 
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['hasUsedTrial', 'payment_status', 'stripeCustomerId', 'updatedAt']);
+    }
+
+    // Rules for interventions collection
+    match /interventions/{interventionId} {
+      // Allow list operations for statistics
+      allow list: if isAuthenticated();
+      allow read: if isAuthenticated() && (
+        resource == null || resource.data.userId == request.auth.uid
+      );
+      allow create: if isAuthenticated() && (
+        request.resource.data.userId == request.auth.uid &&
+        request.resource.data.accountId is string &&
+        request.resource.data.date is timestamp &&
+        request.resource.data.clientNumber is string &&
+        request.resource.data.selectedTypes is list
+      );
+      allow update: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid &&
+        request.resource.data.userId == request.auth.uid
+      );
+      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      
+      // Allow admins to read all interventions
+      allow read, list: if isAdmin();
+    }
+
+    // Rules for expenses collection
+    match /expenses/{expenseId} {
+      // Allow authenticated users to read their own expenses
+      allow read, list: if isAuthenticated() && (
+        resource == null || resource.data.userId == request.auth.uid
+      );
+      allow create: if isAuthenticated() && 
+        request.resource.data.userId == request.auth.uid &&
+        request.resource.data.accountId is string;
+      allow update: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid &&
+        request.resource.data.userId == request.auth.uid
+      );
+      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      
+      // Allow admins to read all expenses
+      allow read, list: if isAdmin();
+    }
+
+    // Rules for intervention_types collection
+    match /intervention_types/{typeId} {
+      allow read: if isAuthenticated() && (
+        resource == null || resource.data.userId == request.auth.uid
+      );
+      allow create: if isAuthenticated() && (
+        request.resource.data.userId == request.auth.uid &&
+        request.resource.data.accountId is string
+      );
+      allow update: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid &&
+        request.resource.data.userId == request.auth.uid
+      );
+      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      
+      // Allow admins to read all intervention types
+      allow read, list: if isAdmin();
+    }
+
+    // Rules for contact messages
+    match /contact_messages/{messageId} {
+      allow create: if isAuthenticated();
+      allow read: if false;
+      // Allow admins to read contact messages
+      allow read, list: if isAdmin();
+    }
+
+    // Rules for consumables collection
+    match /consumables/{consumableId} {
+      allow read, list: if isAuthenticated() && (
+        resource == null || resource.data.userId == request.auth.uid
+      );
+      allow create: if isAuthenticated() && (
+        request.resource.data.userId == request.auth.uid &&
+        request.resource.data.accountId is string
+      );
+      allow update: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid &&
+        request.resource.data.userId == request.auth.uid
+      );
+      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      
+      // Allow admins to read all consumables
+      allow read, list: if isAdmin();
+    }
+
+    // Rules for accounts collection
+    match /accounts/{accountId} {
+      allow read, list: if isAuthenticated() && (
+        resource == null || resource.data.userId == request.auth.uid
+      );
+      allow create: if isAuthenticated() && (
+        request.resource.data.userId == request.auth.uid
+      );
+      allow update: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid &&
+        request.resource.data.userId == request.auth.uid
+      );
+      allow delete: if isAuthenticated() &&
+        resource.data.userId == request.auth.uid &&
+        resource.data.isDefault == false;
+
+      // Allow admins to read all accounts
+      allow read, list: if isAdmin();
+    }
+
+    // Rules for reminders collection
+    match /reminders/{reminderId} {
+      allow read, list: if isAuthenticated() && (
+        resource == null || resource.data.userId == request.auth.uid
+      );
+      allow create: if isAuthenticated() &&
+        request.resource.data.userId == request.auth.uid;
+      allow update: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid &&
+        request.resource.data.userId == request.auth.uid
+      );
+      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+
+      // Allow admins to read all reminders
+      allow read, list: if isAdmin();
+    }
+
+    // Rules for interventions_unitaires collection
+    match /interventions_unitaires/{interventionId} {
+      allow read, list: if isAuthenticated() && (
+        resource == null || resource.data.userId == request.auth.uid
+      );
+      allow create: if isAuthenticated() &&
+        request.resource.data.userId == request.auth.uid;
+      allow update: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid &&
+        request.resource.data.userId == request.auth.uid
+      );
+      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+
+      // Allow admins to read all interventions unitaires
+      allow read, list: if isAdmin();
+    }
+  }
+}

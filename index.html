@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="description" content="MadlinK : Solution de gestion d'interventions fibre optique pour techniciens. Gérez vos comptes opérateurs (Orange, SFR, Bouygues), suivez votre CA mensuel, créez factures et devis. Essai gratuit 2 mois." />
+    <meta name="keywords" content="gestion interventions fibre optique, technicien fibre, opérateur internet, multi-comptes, CA mensuel, suivi interventions, facturation technicien, Orange, SFR, Bouygues, Free, technicien indépendant, freelance fibre, gestion entreprise fibre, logiciel technicien, application technicien, devis facture, rapport interventions, France" />
+    <meta name="author" content="MadlinK" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    <link rel="canonical" href="https://madlink.fr" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://madlink.fr" />
+    <meta property="og:title" content="MadlinK - Gestion d'interventions fibre optique pour techniciens" />
+    <meta property="og:description" content="Solution complète pour techniciens fibre. Gérez vos comptes opérateurs, suivez votre CA mensuel, créez factures et devis. Essai gratuit 2 mois." />
+    <meta property="og:image" content="https://madlink.fr/og-image.png" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="MadlinK" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://madlink.fr" />
+    <meta name="twitter:title" content="MadlinK - Gestion d'interventions fibre optique pour techniciens" />
+    <meta name="twitter:description" content="Solution complète pour techniciens fibre. Gérez vos comptes opérateurs, suivez votre CA mensuel, créez factures et devis. Essai gratuit 2 mois." />
+    <meta name="twitter:image" content="https://madlink.fr/twitter-image.png" />
+
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="MadlinK" />
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="/icon-192.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/icon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icon-192.png" />
+    
+    <title>MadlinK - Gestion d'interventions fibre optique pour techniciens | Multi-comptes & CA mensuel</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- PWA Service Worker -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('SW registered: ', registration);
+            })
+            .catch((registrationError) => {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
+    </script>
+  </body>
+</html>

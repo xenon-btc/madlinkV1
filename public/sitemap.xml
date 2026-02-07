@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <!-- Page d'accueil -->
+  <url>
+    <loc>https://madlink.fr/</loc>
+    <lastmod>2025-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Page d'authentification -->
+  <url>
+    <loc>https://madlink.fr/auth</loc>
+    <lastmod>2025-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Page de contact -->
+  <url>
+    <loc>https://madlink.fr/contact</loc>
+    <lastmod>2025-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Page d'abonnement -->
+  <url>
+    <loc>https://madlink.fr/subscription</loc>
+    <lastmod>2025-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Dashboard -->
+  <url>
+    <loc>https://madlink.fr/dashboard</loc>
+    <lastmod>2025-10-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Interventions -->
+  <url>
+    <loc>https://madlink.fr/dashboard/interventions</loc>
+    <lastmod>2025-10-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Recherche d'interventions -->
+  <url>
+    <loc>https://madlink.fr/dashboard/intervention-search</loc>
+    <lastmod>2025-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Vérification d'interventions -->
+  <url>
+    <loc>https://madlink.fr/dashboard/intervention-verification</loc>
+    <lastmod>2025-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Dépenses -->
+  <url>
+    <loc>https://madlink.fr/dashboard/expenses</loc>
+    <lastmod>2025-10-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Rapports -->
+  <url>
+    <loc>https://madlink.fr/dashboard/reports</loc>
+    <lastmod>2025-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Factures -->
+  <url>
+    <loc>https://madlink.fr/dashboard/invoice</loc>
+    <lastmod>2025-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Paramètres -->
+  <url>
+    <loc>https://madlink.fr/dashboard/settings</loc>
+    <lastmod>2025-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+</urlset>

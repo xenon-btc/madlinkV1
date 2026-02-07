@@ -1,0 +1,61 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Règles pour les images d'interventions
+    match /interventions/{userId}/{imageId} {
+      // Vérifier si l'utilisateur est authentifié
+      function isAuthenticated() {
+        return request.auth != null;
+      }
+
+      // Vérifier si l'utilisateur est le propriétaire ou un admin
+      function isOwnerOrAdmin() {
+        return isAuthenticated() && (
+          request.auth.uid == userId ||
+          request.auth.token.email == 'admin@madlink.fr' ||
+          request.auth.token.email == 'contact@madlink.fr'
+        );
+      }
+
+      // Vérifier si le fichier est une image et sa taille est acceptable
+      function isValidImage() {
+        return request.resource.contentType.matches('image/.*')
+          && request.resource.size <= 5 * 1024 * 1024; // 5MB max
+      }
+
+      // Autoriser la lecture pour le propriétaire ou les admins
+      allow read: if isOwnerOrAdmin();
+      
+      // Autoriser le téléchargement si l'utilisateur est le propriétaire et le fichier est valide
+      allow create: if isAuthenticated() && request.auth.uid == userId && isValidImage();
+      
+      // Interdire la modification des images existantes
+      allow update: if false;
+      
+      // Autoriser la suppression par le propriétaire ou les admins
+      allow delete: if isOwnerOrAdmin();
+    }
+
+    // Règles pour les anciennes images (compatibilité)
+    match /interventions/{interventionId}/{imageId} {
+      function isAuthenticated() {
+        return request.auth != null;
+      }
+
+      function isValidImage() {
+        return request.resource.contentType.matches('image/.*')
+          && request.resource.size <= 5 * 1024 * 1024;
+      }
+
+      // Autoriser la lecture pour tous les utilisateurs authentifiés (pour les anciennes images)
+      allow read: if isAuthenticated();
+      
+      // Autoriser le téléchargement pour les utilisateurs authentifiés
+      allow create: if isAuthenticated() && isValidImage();
+      
+      // Autoriser la suppression pour les utilisateurs authentifiés
+      allow delete: if isAuthenticated();
+    }
+  }
+}
